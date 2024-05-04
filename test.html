@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>부모창</title>
+<script>
+function openChildWindow() {
+    const existChildWindow = sessionStorage.getItem('childWindow');
+    if (!existChildWindow) {
+        var childWindow = window.open("child.html", "childWindow", "width=300,height=200"); 
+        // 부모창에서 자식창의 정보를 세션 스토리지에 저장
+        const existChildWindow = sessionStorage.getItem('childWindow');
+        console.log("existChildWindow ", existChildWindow);
+        sessionStorage.setItem("childWindow", childWindow);
+    }
+    
+    console.log("childWindow ", childWindow);
+    console.log("sessionStorage ", sessionStorage);
+}
+</script>
+</head>
+<body>
+<button onclick="openChildWindow()">자식창 열기</button>
+</body>
+</html>

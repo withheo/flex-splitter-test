@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Split Bar Example</title>
+    <style>
+         *{
+             box-sizing: border-box;
+         }
+        .container {
+            display: flex;
+       
+            height: 100vh;
+            transition: all 0.3s;
+        }
+
+        .center-item {
+            flex: 1;
+            padding: 10px;
+            background-color: lightgray;
+        }
+
+        .splitter {
+            width: 5px;
+            cursor: ew-resize;
+            background-color: gray;
+        }
+
+        .right-item {
+            flex: 0 0 200px;
+            padding: 10px;
+            background-color: lightblue;
+            min-width: 100px;
+            max-width: 400px;
+            
+        }
+
+        .right-item.ani {
+            transition: 0.2s all;
+        }
+
+        .right-item.hidden {
+            flex: 0 0 0;
+            padding: 0;
+            overflow: hidden;
+            min-width: 0px;
+            max-width: 0px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="center-item">중앙 아이템</div>
+        <div class="splitter" id="splitter"></div> <!-- 분할 바 -->
+        <div class="right-item" id="right-item">우측 아이템</div>
+    </div>
+    <button id="toggleButton">Toggle 우측 영역</button> <!-- 토글 버튼 -->
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const splitter = document.getElementById("splitter");
+            const rightItem = document.getElementById("right-item");
+            const toggleButton = document.getElementById("toggleButton");
+
+            let isDragging = false;
+            let width = 0;
+            let downX = 0;
+            let toggle = 0;
+
+            splitter.addEventListener("mousedown", (e) => {      
+                e.preventDefault(); // 기본 동작 방지
+                e.stopPropagation(); // 이벤트 전파 방지         
+                width = rightItem.getBoundingClientRect().width;               
+                downX = e.clientX;
+                rightItem.classList.remove("ani");
+                document.addEventListener("mousemove", resize);
+                document.addEventListener("mouseup", stopResize);
+            });
+
+            toggleButton.addEventListener("click", () => {
+               
+                if (toggle === 0 ) {
+                    rightItem.classList.add("ani");
+                    rightItem.classList.toggle("hidden");
+                    toggle = 1;
+                } else {
+                    rightItem.classList.add("ani");
+                    rightItem.classList.toggle("hidden");
+                }
+            });
+
+            function resize(e) {
+                const newWidth = width + (downX - e.clientX);
+                console.log(newWidth);
+                rightItem.style.flex = `0 0 ${newWidth}px`;
+            }
+
+            function stopResize() {
+                isDragging = false;
+                document.removeEventListener("mousemove", resize);
+                document.removeEventListener("mouseup", stopResize);
+            }
+        });
+    </script>
+</body>
+</html>

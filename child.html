@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>자식창</title>
+<script>
+window.onload = function() {
+    // 부모창의 창 객체를 세션 스토리지에서 가져오기
+    var parentWindow = sessionStorage.getItem("childWindow");
+    console.log(parentWindow);
+    // 부모창에 메시지 전송
+    if (parentWindow) {
+        parentWindow.postMessage("안녕하세요, 부모님!", "*");
+    }
+};
+
+// 부모창에서 메시지 수신
+window.addEventListener("message", function(event) {
+    alert("부모창으로부터 메시지 수신: " + event.data);
+});
+</script>
+</head>
+<body>
+<h1>자식창</h1>
+<textarea>asdfasdfs</textarea>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<html>
+    <body>
+        <script>
+            function getHeight(length, ratio) {
+                const height = ((length)/(Math.sqrt((Math.pow(ratio, 2)+1))));
+                    return height;
+                }
+            function getWidth(length, ratio) {
+                var width = ((length)/(Math.sqrt((1)/(Math.pow(ratio, 2)+1))));
+                return width;
+            }
+
+            const ratio = (16/9);
+            const height = getHeight(720,ratio);
+            const width = getWidth(height,ratio);
+
+            console.log(height);
+            console.log(width);
+        </script>
+    </body>
+</html>
